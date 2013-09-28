@@ -11,7 +11,7 @@ MASTER_SITES=	ftp://ftp.gimp.org/pub/%SUBDIR%/ \
 		${MASTER_SITE_RINGSERVER:S,%SUBDIR%,graphics/%SUBDIR%,}
 MASTER_SITE_SUBDIR=	gimp/help/
 
-MAINTAINER=	liangtai.s4@gmail.com
+MAINTAINER=	liangtai.s16@gmail.com
 COMMENT=	GIMP User Manual
 
 LICENSE=	GFDL
@@ -79,6 +79,8 @@ NO_STAGE=	yes
 TARGETLANGS+=	${lang}
 .endif
 .endfor
+
+PLIST_FILES=	"@comment Insert PLIST.doc here"
 
 do-build:
 .for lang in ${TARGETLANGS}
