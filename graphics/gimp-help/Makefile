@@ -25,10 +25,9 @@ BUILD_DEPENDS+=	msgfmt:${PORTSDIR}/devel/gettext \
 #	pngcrush:${PORTSDIR}/graphics/pngcrush \ # unused
 #RUN_DEPENDS=	gimp-2.8:${PORTSDIR}/graphics/gimp-app
 
-USES=	pkgconfig
+USES=	gmake pkgconfig
 USE_BZIP2=	yes
 GNU_CONFIGURE=	yes
-USE_GMAKE=	yes
 
 LANG_ALL=	de el en en_GB es fr it ja nl nn ru
 LANG_ALMOST_UNTRANSLATED=	da fi hr ko lt pl sl sv zh_CN
@@ -87,15 +86,17 @@ do-build:
 .endfor
 
 do-install:
-	@${MKDIR} ${GIMPHELPDIR}
+	@${MKDIR} ${STAGEDIR}/${GIMPHELPDIR}
 .for lang in ${TARGETLANGS}
 	@(cd ${WRKSRC}/html ; tar cLf - ${lang}) | \
-	(cd ${GIMPHELPDIR} ; tar xvf -)
+	(cd ${STAGEDIR}/${GIMPHELPDIR} ; tar xvf -)
 .endfor
 	@${RM} -f ${WRKDIR}/PLIST.doc ; \
-	${FIND} ${GIMPHELPDIR} -type f | ${SED} 's|${PREFIX}/||' \
+	${FIND} ${STAGEDIR}/${GIMPHELPDIR} -type f | \
+		${SED} 's|${STAGEDIR}/${PREFIX}/||' \
 		>> ${WRKDIR}/PLIST.doc ; \
-	${FIND} ${GIMPHELPDIR} -type d | ${SED} 's|${PREFIX}/|@dirrm |' \
+	${FIND} ${STAGEDIR}/${GIMPHELPDIR} -type d | \
+		${SED} 's|${STAGEDIR}/${PREFIX}/|@dirrm |' \
 		| ${SORT} -r >> ${WRKDIR}/PLIST.doc ; \
 	cd ${WRKDIR} ; ${SED} -i -e '/PLIST.doc/ r PLIST.doc' ${TMPPLIST}
 
