@@ -88,17 +88,17 @@ do-build:
 .endfor
 
 do-install:
-	@${MKDIR} ${STAGEDIR}/${GIMPHELPDIR}
+	@${MKDIR} ${STAGEDIR}${GIMPHELPDIR}
 .for lang in ${TARGETLANGS}
 	@(cd ${WRKSRC}/html ; tar cLf - ${lang}) | \
-	(cd ${STAGEDIR}/${GIMPHELPDIR} ; tar xvf -)
+	(cd ${STAGEDIR}${GIMPHELPDIR} ; tar xvf -)
 .endfor
 	@${RM} -f ${WRKDIR}/PLIST.doc ; \
-	${FIND} ${STAGEDIR}/${GIMPHELPDIR} -type f | \
-		${SED} 's|${STAGEDIR}/${PREFIX}/||' \
+	${FIND} ${STAGEDIR}${GIMPHELPDIR} -type f | \
+		${SED} 's|${STAGEDIR}${PREFIX}/||' \
 		>> ${WRKDIR}/PLIST.doc ; \
-	${FIND} ${STAGEDIR}/${GIMPHELPDIR} -type d | \
-		${SED} 's|${STAGEDIR}/${PREFIX}/|@dirrm |' \
+	${FIND} ${STAGEDIR}${GIMPHELPDIR} -type d | \
+		${SED} 's|${STAGEDIR}${PREFIX}/|@dirrm |' \
 		| ${SORT} -r >> ${WRKDIR}/PLIST.doc ; \
 	cd ${WRKDIR} ; ${SED} -i -e '/PLIST.doc/ r PLIST.doc' ${TMPPLIST}
 
