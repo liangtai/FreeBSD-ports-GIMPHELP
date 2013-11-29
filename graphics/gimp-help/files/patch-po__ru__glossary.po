@@ -1,0 +1,16 @@
+Fix invalid tag
+
+--------------------------------------------
+diff po/ru/glossary.po po/ru/glossary.po
+index 9a143f8..df48d61 100644
+--- po/ru/glossary.po.orig
++++ po/ru/glossary.po
+@@ -958,7 +958,7 @@ msgstr "Управление цветом"
+ 
+ #: src/glossary/glossary.xml:1596(para)
+ msgid "Rendering intents are ways of dealing with colors that are out-of-<xref linkend=\"glossary-gamut\"/> colors present in the source space that the destination space is incapable of producing. There are four rendering intents defined by the ICC:"
+-msgstr "Цветопередача ответственна за преобразование цветов вне <xref linkend=\"glossary-gamut\">цветового охвата</xref> из исходного цветового пространства, где эти цвета присутствтуют в пространство цели, где эти цвета отсутствуюти. ICC определяет четыре цветопередачи:"
++msgstr "Цветопередача ответственна за преобразование цветов вне <link linkend=\"glossary-gamut\">цветового охвата</link> из исходного цветового пространства, где эти цвета присутствтуют в пространство цели, где эти цвета отсутствуюти. ICC определяет четыре цветопередачи:"
+ 
+ #: src/glossary/glossary.xml:1604(term)
+ msgid "Perceptual"
