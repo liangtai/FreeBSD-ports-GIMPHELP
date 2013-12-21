@@ -1,0 +1,16 @@
+Fix invalid tag
+
+--------------------------------------------
+diff po/ru/glossary.po po/ru/glossary.po
+index 9a143f8..df48d61 100644
+--- po/ru/glossary.po.orig
++++ po/ru/glossary.po
+@@ -958,7 +958,7 @@ msgstr "Управление цветом"
+ 
+ #: src/glossary/glossary.xml:1596(para)
+ msgid "Rendering intents are ways of dealing with colors that are out-of-<xref
+-msgstr "Цветопередача ответственна за преобразование цветов вне <xref linkend=
++msgstr "Цветопередача ответственна за преобразование цветов вне <link linkend=
+ 
+ #: src/glossary/glossary.xml:1604(term)
+ msgid "Perceptual"

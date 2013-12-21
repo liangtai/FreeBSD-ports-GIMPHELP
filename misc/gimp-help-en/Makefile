@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	gimp-help
-PORTVERSION=	2.6.1
+PORTVERSION=	2.8.1
 CATEGORIES?=	misc graphics
 MASTER_SITES=	ftp://ftp.gimp.org/pub/%SUBDIR%/ \
 		http://gimp.mirrors.hoobly.com/%SUBDIR%/ \
@@ -12,26 +12,41 @@ MASTER_SITES=	ftp://ftp.gimp.org/pub/%SUBDIR%/ \
 MASTER_SITE_SUBDIR=	gimp/help
 PKGNAMEPREFIX?=	${DOCLANG}-
 PKGNAMESUFFIX=	-html
-DISTNAME=	${PORTNAME}-${PORTVERSION}${PKGNAMESUFFIX}-${DOCLANG}
 
 MAINTAINER=	liangtai.s16@gmail.com
-COMMENT?=	The GIMP User Manual in English
+COMMENT?=	GIMP User Manual in English
 
 LICENSE=	GFDL
 
-USE_BZIP2=	YES
-NO_BUILD=	YES
-PLIST_SUB=	GIMPDATA=${GIMPDATADIR:S,^${PREFIX}/,,} \
-		AMPLE=${AMPLE} DOCLANG=${DOCLANG}
+BUILD_DEPENDS+=	msgfmt:${PORTSDIR}/devel/gettext \
+		xsltproc:${PORTSDIR}/textproc/libxslt \
+		xmllint:${PORTSDIR}/textproc/libxml2
+#RUN_DEPENDS=	gimp-2.8:${PORTSDIR}/graphics/gimp-app
 
-GIMPDATADIR?=	${PREFIX}/share/gimp
+USES=	gmake pkgconfig
+USE_BZIP2=	yes
+GNU_CONFIGURE=	yes
+
+GIMPHELPDIR?=	${PREFIX}/share/gimp/help
 DOCLANG?=	en
-AMPLE?=	"@comment "
+${DOCLANG}_DETECT?=	${GIMPHELPDIR}/${DOCLANG}/index.html
 
-NO_STAGE=	yes
+PLIST_FILES=	"@comment Insert PLIST.doc here"
+
+do-build:
+	cd ${WRKSRC} && ${GMAKE} html-${DOCLANG}
+
 do-install:
-	@ ${MKDIR} ${GIMPDATADIR}/help ; \
-	cd ${WRKDIR}/${PORTNAME}-2/html && \
-	${COPYTREE_SHARE} ${DOCLANG} ${GIMPDATADIR}/help
+	@${RM} -f ${WRKDIR}/PLIST.doc
+	@${MKDIR} ${STAGEDIR}${GIMPHELPDIR}
+	(cd ${WRKSRC}/html ; tar cLf - ${DOCLANG}) | \
+	(cd ${STAGEDIR}${GIMPHELPDIR} ; tar xf -)
+	@${FIND} ${STAGEDIR}${GIMPHELPDIR}/${DOCLANG} -type f | \
+		${SED} 's|${STAGEDIR}${PREFIX}/||' \
+		>> ${WRKDIR}/PLIST.doc ; \
+	${FIND} ${STAGEDIR}${GIMPHELPDIR}/${DOCLANG} -type d | \
+		${SED} 's|${STAGEDIR}${PREFIX}/|@dirrm |' \
+		| ${SORT} -r >> ${WRKDIR}/PLIST.doc
+	@cd ${WRKDIR} ; ${SED} -i -e '/PLIST.doc/ r PLIST.doc' ${TMPPLIST}
 
 .include <bsd.port.mk>

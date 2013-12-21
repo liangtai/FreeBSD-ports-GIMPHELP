@@ -6,10 +6,10 @@ CATEGORIES=	french graphics
 MAINTAINER=	liangtai.s16@gmail.com
 COMMENT=	The GIMP User Manual in French
 
+LICENSE=	GFDL
+
 MASTERDIR=	${.CURDIR}/../../misc/gimp-help-en
 
 DOCLANG=	fr
-AMPLE=	"@comment "
 
-NO_STAGE=	yes
 .include "${MASTERDIR}/Makefile"

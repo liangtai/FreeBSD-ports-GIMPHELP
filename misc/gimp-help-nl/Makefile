@@ -6,10 +6,10 @@ CATEGORIES=	misc graphics
 MAINTAINER=	liangtai.s16@gmail.com
 COMMENT=	The GIMP User Manual in Dutch
 
+LICENSE=	GFDL
+
 MASTERDIR=	${.CURDIR}/../gimp-help-en
 
 DOCLANG=	nl
-AMPLE=	"@comment "
 
-NO_STAGE=	yes
 .include "${MASTERDIR}/Makefile"
