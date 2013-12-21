@@ -1,5 +1,5 @@
 # Created by: SimaMoto,RyoTa <liangtai.s4@gmail.com>
-# $FreeBSD: head/misc/gimp-help-en/Makefile 327745 2013-09-20 20:50:57Z bapt $
+# $FreeBSD$
 
 PORTNAME=	gimp-help
 PORTVERSION=	2.6.1
@@ -14,7 +14,7 @@ PKGNAMEPREFIX?=	${DOCLANG}-
 PKGNAMESUFFIX=	-html
 DISTNAME=	${PORTNAME}-${PORTVERSION}${PKGNAMESUFFIX}-${DOCLANG}
 
-MAINTAINER=	liangtai.s4@gmail.com
+MAINTAINER=	liangtai.s16@gmail.com
 COMMENT?=	The GIMP User Manual in English
 
 LICENSE=	GFDL

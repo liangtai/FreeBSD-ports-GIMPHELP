@@ -1,9 +1,9 @@
 # Created by: SimaMoto,RyoTa <liangtai.s4@gmail.com>
-# $FreeBSD: head/japanese/gimp-help/Makefile 327737 2013-09-20 18:47:54Z bapt $
+# $FreeBSD$
 
 CATEGORIES=	japanese graphics
 
-MAINTAINER=	liangtai.s4@gmail.com
+MAINTAINER=	liangtai.s16@gmail.com
 COMMENT=	The GIMP User Manual in Japanese
 
 MASTERDIR=	${.CURDIR}/../../misc/gimp-help-en

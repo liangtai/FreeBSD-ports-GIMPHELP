@@ -1,5 +1,5 @@
 # Created by: Adam Weinberger <adamw@FreeBSD.org>
-# $FreeBSD: head/graphics/gimp-help/Makefile 327733 2013-09-20 18:35:44Z bapt $
+# $FreeBSD$
 
 PORTNAME=	gimp-help
 PORTVERSION=	2.6.1
@@ -9,7 +9,7 @@ PKGNAMESUFFIX=	-html
 DISTFILES=	# none
 EXTRACT_ONLY=	# empty
 
-MAINTAINER=	liangtai.s4@gmail.com
+MAINTAINER=	liangtai.s16@gmail.com
 COMMENT=	The meta port for GIMP User Manual
 
 LICENSE=	GFDL

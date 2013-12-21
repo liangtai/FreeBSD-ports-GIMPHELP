@@ -1,9 +1,9 @@
 # Created by: SimaMoto,RyoTa <liangtai.s4@gmail.com>
-# $FreeBSD: head/korean/gimp-help/Makefile 327739 2013-09-20 19:49:59Z bapt $
+# $FreeBSD$
 
 CATEGORIES=	korean graphics
 
-MAINTAINER=	liangtai.s4@gmail.com
+MAINTAINER=	liangtai.s16@gmail.com
 COMMENT=	The GIMP User Manual in Korean
 
 MASTERDIR=	${.CURDIR}/../../misc/gimp-help-en

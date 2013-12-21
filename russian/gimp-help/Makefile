@@ -1,9 +1,9 @@
 # Created by: SimaMoto,RyoTa <liangtai.s4@gmail.com>
-# $FreeBSD: head/russian/gimp-help/Makefile 327766 2013-09-20 22:46:16Z bapt $
+# $FreeBSD$
 
 CATEGORIES=	russian graphics
 
-MAINTAINER=	liangtai.s4@gmail.com
+MAINTAINER=	liangtai.s16@gmail.com
 COMMENT=	The GIMP User Manual in Russian
 
 MASTERDIR=	${.CURDIR}/../../misc/gimp-help-en
