@@ -12,4 +12,8 @@ MASTERDIR=	${.CURDIR}/../../misc/gimp-help-en
 
 DOCLANG=	ru
 
+post-patch:
+	${REINPLACE_CMD} -e '/glossary\.xml:1596/{; n; n; s/xref/link/g; }' \
+		${WRKSRC}/po/ru/glossary.po
+
 .include "${MASTERDIR}/Makefile"
