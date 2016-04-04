@@ -3,12 +3,12 @@
 
 PORTNAME=	gimp-help
 PORTVERSION=	2.8.1
+PORTREVISION=	2
 CATEGORIES?=	misc graphics
 MASTER_SITES=	ftp://ftp.gimp.org/pub/%SUBDIR%/ \
 		http://gimp.mirrors.hoobly.com/%SUBDIR%/ \
 		http://ftp.gwdg.de/pub/misc/grafik/gimp/%SUBDIR%/ \
-		http://www.mirrorservice.org/sites/ftp.gimp.org/pub/%SUBDIR%/ \
-		${MASTER_SITE_RINGSERVER:S,%SUBDIR%,graphics/%SUBDIR%,}
+		http://www.mirrorservice.org/sites/ftp.gimp.org/pub/%SUBDIR%/
 MASTER_SITE_SUBDIR=	gimp/help
 PKGNAMEPREFIX?=	${DOCLANG}-
 PKGNAMESUFFIX=	-html
@@ -18,35 +18,30 @@ COMMENT?=	GIMP User Manual in English
 
 LICENSE=	GFDL
 
-BUILD_DEPENDS+=	msgfmt:${PORTSDIR}/devel/gettext \
-		xsltproc:${PORTSDIR}/textproc/libxslt \
-		xmllint:${PORTSDIR}/textproc/libxml2
-#RUN_DEPENDS=	gimp-2.8:${PORTSDIR}/graphics/gimp-app
+BUILD_DEPENDS=	${PYTHON_SITELIBDIR}/libxml2mod.so:textproc/py-libxml2 \
+		${LOCALBASE}/share/xsl/docbook/xhtml/chunk.xsl:textproc/docbook-xsl
 
-USES=	gmake pkgconfig
-USE_BZIP2=	yes
+USES=		gettext-tools gmake perl5 pkgconfig python:2 shebangfix tar:bzip2
+USE_GNOME=	libxslt:build
+USE_PERL5=	build
 GNU_CONFIGURE=	yes
+CONFIGURE_ARGS=	--without-gimp
+CONFIGURE_ENV=	ALL_LINGUAS=${DOCLANG}
 
-GIMPHELPDIR?=	${PREFIX}/share/gimp/help
 DOCLANG?=	en
-${DOCLANG}_DETECT?=	${GIMPHELPDIR}/${DOCLANG}/index.html
 
-PLIST_FILES=	"@comment Insert PLIST.doc here"
+PORTDATA=	*
+DATADIR=	${PREFIX}/share/gimp
 
-do-build:
-	cd ${WRKSRC} && ${GMAKE} html-${DOCLANG}
+SHEBANG_FILES=	tools/xml2po.py
 
-do-install:
-	@${RM} -f ${WRKDIR}/PLIST.doc
-	@${MKDIR} ${STAGEDIR}${GIMPHELPDIR}
-	(cd ${WRKSRC}/html ; tar cLf - ${DOCLANG}) | \
-	(cd ${STAGEDIR}${GIMPHELPDIR} ; tar xf -)
-	@${FIND} ${STAGEDIR}${GIMPHELPDIR}/${DOCLANG} -type f | \
-		${SED} 's|${STAGEDIR}${PREFIX}/||' \
-		>> ${WRKDIR}/PLIST.doc ; \
-	${FIND} ${STAGEDIR}${GIMPHELPDIR}/${DOCLANG} -type d | \
-		${SED} 's|${STAGEDIR}${PREFIX}/|@dirrm |' \
-		| ${SORT} -r >> ${WRKDIR}/PLIST.doc
-	@cd ${WRKDIR} ; ${SED} -i -e '/PLIST.doc/ r PLIST.doc' ${TMPPLIST}
+post-patch:
+# Install to the same directory as when configuring --with-gimp
+	${REINPLACE_CMD} '/gimpdatadir=.*\/2.0/s,/2\.0,,' \
+		${WRKSRC}/configure
+.if ${DOCLANG:Mru}
+	${REINPLACE_CMD} -e '/glossary\.xml:1596/{; n; n; s/xref/link/g; }' \
+		${WRKSRC}/po/ru/glossary.po
+.endif
 
 .include <bsd.port.mk>

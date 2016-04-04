@@ -4,19 +4,14 @@
 PORTNAME=	gimp-help
 PORTVERSION=	2.8.1
 CATEGORIES=	graphics
-MASTER_SITES=	# empty
 PKGNAMESUFFIX=	-html
-DISTFILES=	# none
-EXTRACT_ONLY=	# empty
 
 MAINTAINER=	liangtai.s16@gmail.com
 COMMENT=	The meta port for GIMP User Manual
 
 LICENSE=	GFDL
 
-.MAKE.FreeBSD_UL=	yes
-
-NO_BUILD=	yes
+USES=		metaport
 
 LANG_ALL_HTML=	ca da de el en en_GB es fr it ja ko nl nn \
 		pt_BR ru sl sv zh_CN
@@ -49,30 +44,17 @@ sl_NAME=	Slovenian
 sv_NAME=	Swedish
 zh_CN_NAME=	Chinese Simplified
 
+OPTIONS_DEFINE=	ALL ${LANG_ALL_HTML:tu}
+OPTIONS_DEFAULT=	ALL
+ALL_DESC=	All translations
+
 .for lang in ${LANG_ALL_HTML}
 ${lang}_DETECT?=	${LOCALBASE}/share/gimp/help/${lang}/index.html
 ${lang}_PORT?=		misc/gimp-help-${lang}
 ${lang}_NAME?=		${lang}
-${lang:U}_DESC=		${${lang}_NAME}
+${lang:tu}_DESC=		${${lang}_NAME}
+${lang:tu}_RUN_DEPENDS=	${${lang}_DETECT}:${${lang}_PORT}
+ALL_RUN_DEPENDS+=	${${lang}_DETECT}:${${lang}_PORT}
 .endfor
-
-OPTIONS_DEFINE=	ALL
-OPTIONS_DEFAULT=	ALL
-ALL_DESC=	All translations
-.for lang in ${LANG_ALL_HTML}
-OPTIONS_DEFINE+=	${lang:U}
-.endfor
-
-NO_STAGE=	yes
-.include <bsd.port.options.mk>
-
-.for lang in ${LANG_ALL_HTML}
-.if ${PORT_OPTIONS:MALL} || ${PORT_OPTIONS:M${lang:U}}
-RUN_DEPENDS+=	${${lang}_DETECT}:${PORTSDIR}/${${lang}_PORT}
-.endif
-.endfor
-
-do-install:
-	${DO_NADA}
 
 .include <bsd.port.mk>
